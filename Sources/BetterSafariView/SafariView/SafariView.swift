@@ -59,6 +59,9 @@ public struct SafariView {
     var preferredControlTintColor: UIColor?
     var dismissButtonStyle: DismissButtonStyle = .done
     
+    var sfDelegate: SFSafariViewControllerDelegate?
+    
+    
     // There is a bug on Xcode 12.0 (Swift 5.3.0) where `UIColor.init(_ color: Color)` is missing for Mac Catalyst target.
     #if compiler(>=5.3.1) || (compiler(>=5.3) && !targetEnvironment(macCatalyst))
     
@@ -155,7 +158,17 @@ public struct SafariView {
         safariViewController.preferredBarTintColor = self.preferredBarTintColor
         safariViewController.preferredControlTintColor = self.preferredControlTintColor
         safariViewController.dismissButtonStyle = self.dismissButtonStyle
+        safariViewController.delegate = self.sfDelegate
+    
     }
+    
+    
+    public func setDelegate(_ delegate: SFSafariViewControllerDelegate?) -> Self {
+        var modified = self
+        modified.sfDelegate = delegate
+        return modified
+    }
+    
 }
 
 public extension SafariView.Configuration {
