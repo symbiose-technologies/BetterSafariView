@@ -158,7 +158,7 @@ public struct SafariView {
         safariViewController.preferredBarTintColor = self.preferredBarTintColor
         safariViewController.preferredControlTintColor = self.preferredControlTintColor
         safariViewController.dismissButtonStyle = self.dismissButtonStyle
-        safariViewController.delegate = self.sfDelegate
+//        safariViewController.delegate = self.sfDelegate
     
     }
     

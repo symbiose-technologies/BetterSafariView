@@ -45,6 +45,8 @@ extension SafariViewPresenter {
         let uiView = UIView()
         private weak var safariViewController: SFSafariViewController?
         
+        private weak var additionalDelegate: SFSafariViewControllerDelegate?
+        
         // MARK: Item Handling
         
         var item: Item? {
@@ -79,6 +81,9 @@ extension SafariViewPresenter {
             let safariViewController = SFSafariViewController(url: representation.url, configuration: representation.configuration)
             safariViewController.delegate = self
             representation.applyModification(to: safariViewController)
+            
+            self.additionalDelegate = representation.sfDelegate
+            
             
             // Present a Safari view controller from the `viewController` of `UIViewRepresentable`, instead of `UIViewControllerRepresentable`.
             // This fixes an issue where the Safari view controller is not presented properly
@@ -136,7 +141,21 @@ extension SafariViewPresenter {
         
         func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
             resetItemBindingAndHandleDismissal()
+            self.additionalDelegate?.safariViewControllerDidFinish?(controller)
         }
+        
+        
+        public func safariViewController(_ controller: SFSafariViewController, didCompleteInitialLoad: Bool) {
+            self.additionalDelegate?.safariViewController?(controller, didCompleteInitialLoad: didCompleteInitialLoad)
+
+        }
+        
+        
+        public func safariViewController(_ controller: SFSafariViewController, initialLoadDidRedirectTo URL: URL) {
+            self.additionalDelegate?.safariViewController?(controller, initialLoadDidRedirectTo: URL)
+        
+        }
+        
     }
 }
 
