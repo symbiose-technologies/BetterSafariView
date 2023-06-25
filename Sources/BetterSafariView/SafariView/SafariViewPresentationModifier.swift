@@ -6,7 +6,7 @@ struct SafariViewPresentationModifier: ViewModifier {
     
     @Binding var isPresented: Bool
     var onDismiss: (() -> Void)? = nil
-    var representationBuilder: () -> SafariView
+    var representationBuilder: () -> SafariView_SUI
     
     private var item: Binding<Bool?> {
         .init(
@@ -16,7 +16,7 @@ struct SafariViewPresentationModifier: ViewModifier {
     }
     
     // Converts `() -> Void` closure to `(Bool) -> Void`
-    private func itemRepresentationBuilder(bool: Bool) -> SafariView {
+    private func itemRepresentationBuilder(bool: Bool) -> SafariView_SUI {
         return representationBuilder()
     }
     
@@ -35,7 +35,7 @@ struct ItemSafariViewPresentationModifier<Item: Identifiable>: ViewModifier {
     
     @Binding var item: Item?
     var onDismiss: (() -> Void)? = nil
-    var representationBuilder: (Item) -> SafariView
+    var representationBuilder: (Item) -> SafariView_SUI
     
     func body(content: Content) -> some View {
         content.background(
@@ -60,7 +60,7 @@ public extension View {
     func safariView(
         isPresented: Binding<Bool>,
         onDismiss: (() -> Void)? = nil,
-        content representationBuilder: @escaping () -> SafariView
+        content representationBuilder: @escaping () -> SafariView_SUI
     ) -> some View {
         self.modifier(
             SafariViewPresentationModifier(
@@ -86,7 +86,7 @@ public extension View {
     func safariView<Item: Identifiable>(
         item: Binding<Item?>,
         onDismiss: (() -> Void)? = nil,
-        content representationBuilder: @escaping (Item) -> SafariView
+        content representationBuilder: @escaping (Item) -> SafariView_SUI
     ) -> some View {
         self.modifier(
             ItemSafariViewPresentationModifier(

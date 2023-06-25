@@ -9,7 +9,7 @@ struct SafariViewPresenter<Item: Identifiable>: UIViewRepresentable {
     
     @Binding var item: Item?
     var onDismiss: (() -> Void)? = nil
-    var representationBuilder: (Item) -> SafariView
+    var representationBuilder: (Item) -> SafariView_SUI
     
     // MARK: UIViewRepresentable
     

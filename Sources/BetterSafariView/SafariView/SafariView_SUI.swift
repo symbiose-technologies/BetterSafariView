@@ -27,7 +27,7 @@ import SafariServices
 /// - Note:
 ///     In Mac apps built with Mac Catalyst, `SafariView` launches the default web browser instead of displaying a modal window.
 ///
-public struct SafariView {
+public struct SafariView_SUI {
     
     /// A configuration object that defines how a Safari view controller should be initialized.
     public typealias Configuration = SFSafariViewController.Configuration
@@ -158,7 +158,6 @@ public struct SafariView {
         safariViewController.preferredBarTintColor = self.preferredBarTintColor
         safariViewController.preferredControlTintColor = self.preferredControlTintColor
         safariViewController.dismissButtonStyle = self.dismissButtonStyle
-//        safariViewController.delegate = self.sfDelegate
     
     }
     
@@ -171,7 +170,7 @@ public struct SafariView {
     
 }
 
-public extension SafariView.Configuration {
+public extension SafariView_SUI.Configuration {
     convenience init(entersReaderIfAvailable: Bool = false, barCollapsingEnabled: Bool = true) {
         self.init()
         self.entersReaderIfAvailable = entersReaderIfAvailable

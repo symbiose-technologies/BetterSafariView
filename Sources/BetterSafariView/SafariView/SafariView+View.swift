@@ -4,7 +4,7 @@ import SwiftUI
 import SafariServices
 
 // A `View` conformance for the advanced usage.
-extension SafariView: View {
+extension SafariView_SUI: View {
     
     // There is a bug on Xcode 12.0 (Swift 5.3.0) where `ignoresSafeArea(_:edges:)` is missing for Mac Catalyst target.
     #if compiler(>=5.3.1) || (compiler(>=5.3) && !targetEnvironment(macCatalyst))
@@ -49,15 +49,15 @@ extension SafariView: View {
     #endif
 }
 
-extension SafariView {
+extension SafariView_SUI {
     
     struct Representable: UIViewControllerRepresentable {
         
         // MARK: Parent Copying
         
-        private var parent: SafariView
+        private var parent: SafariView_SUI
         
-        init(parent: SafariView) {
+        init(parent: SafariView_SUI) {
             self.parent = parent
         }
         
@@ -69,15 +69,32 @@ extension SafariView {
                 configuration: parent.configuration
             )
             // Disable interactive pop gesture recognizer
+            
             safariViewController.modalPresentationStyle = .none
+            
             parent.applyModification(to: safariViewController)
+            
+            if let del = self.parent.sfDelegate {
+                safariViewController.delegate = del
+            }
+            
             return safariViewController
         }
         
         func updateUIViewController(_ safariViewController: SFSafariViewController, context: Context) {
             parent.applyModification(to: safariViewController)
+            
+            if let del = self.parent.sfDelegate {
+                safariViewController.delegate = del
+            }
+            
         }
     }
 }
+
+
+
+
+
 
 #endif
